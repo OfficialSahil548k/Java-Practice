@@ -1,3 +1,5 @@
+package Basics;
+
 public class typeconversion{
     public static void main(String[] args) {
         float a = 12.78f;
