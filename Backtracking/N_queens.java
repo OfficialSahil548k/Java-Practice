@@ -1,6 +1,7 @@
 package Backtracking;
 
 public class N_queens {
+     public static int count = 0;
 
     public static boolean isSafe(char board[][], int row, int col){
         //vertically up
@@ -25,22 +26,26 @@ public class N_queens {
         return true;
     }
 
-    public static void nQueens(char board[][], int row) {
+    public static boolean nQueens(char board[][], int row) {
         // base case
         if (row == board.length) {
-            System.out.println("--------------chess board-------------");
-            printChess(board);
-            return;
+            // System.out.println("--------------chess board-------------");
+            // printChess(board);
+            count ++;
+            return true;
         }
 
         // column loop
         for (int j = 0; j < board.length; j++) {
             if (isSafe(board, row, j)) {
                 board[row][j] = 'Q';
-                nQueens(board, row + 1); // fnx call
+                if(nQueens(board, row + 1)){
+                    return true;
+                } // fnx call
                 board[row][j] = '-'; // backtrack step
             }
         }
+         return false;
     }
 
     public static void printChess(char board[][]) {
@@ -60,6 +65,12 @@ public class N_queens {
                 board[i][j] = '-';
             }
         }
-        nQueens(board, 0);
+        if(nQueens(board, 0)){
+            System.out.println("Solution is possible : ");
+            printChess(board);
+        }else{
+            System.out.println("Solution is not possible");
+        }
+       // System.out.println("Total ways to solev n queens = " + count);
     }
 }
