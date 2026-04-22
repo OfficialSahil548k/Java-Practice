@@ -218,7 +218,12 @@ public class LinkedList1 {
 
        // reverse the 2nd half
         Node prev = null;
-        Node curr = mid;
+        Node curr;
+        if(size%2!= 0){
+            curr = mid.next;
+        }else{
+            curr = mid;
+        }
         Node next = null;
         while(curr != null){
             next = curr.next;
@@ -239,12 +244,56 @@ public class LinkedList1 {
        }
        return true;
     }
+
+    public void zig_zag_list(){
+        if(head == null || head == null){
+            return;
+        }
+        //Find mid
+        Node slow = head;
+        Node fast = head.next;
+        while(fast!= null && fast.next!= null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        Node mid = slow;
+
+        //reverse second half
+        Node prev = null;
+        Node curr = mid;
+        Node next = null;
+        while(curr != null){
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        //alternate merging
+        Node leftHead = head;
+        Node rightHead = prev;
+        Node nextL, nextR;
+        while(leftHead != null && rightHead != null){
+            // zig-zag
+            nextL = leftHead.next;
+            leftHead.next = rightHead;
+            nextR = rightHead.next;
+            rightHead.next = nextL;
+
+            // update 
+            leftHead = nextL;
+            rightHead = nextR;
+        }
+
+    }
     public static void main(String[] args) {
         LinkedList1 ll = new LinkedList1();
         ll.addFirst(2);
         ll.addFirst(1);
-        ll.addLast(2);
-        ll.addLast(1);
+        ll.addLast(3);
+        ll.addLast(4);
+        ll.addLast(5);
+        ll.addLast(6);
         // ll.addMiddle(2, 9);
         ll.printList();
         System.out.println("size of list : " +ll.size);
@@ -265,6 +314,8 @@ public class LinkedList1 {
         // int val4 = ll.removeNthNode(2);
         // System.out.println(val4);
         // ll.printList();
-        System.out.println(ll.checkPalindrome());
+        //System.out.println(ll.checkPalindrome());
+        ll.zig_zag_list();
+        ll.printList();
     }
 }
